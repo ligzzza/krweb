@@ -7,4 +7,5 @@ class ExamAdmin(admin.ModelAdmin):
     list_filter = ('is_public', 'created_at', 'exam_date')
     filter_horizontal = ('participants',)
 
-admin.site.register(geeхам, ExamAdmin)
+admin.site.register(geeхам)
+admin.site.register(User)
