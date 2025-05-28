@@ -3,34 +3,117 @@
 <head>
     <meta charset="UTF-8" />
     <title>Экзамены</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .profile {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .exams {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h3 {
+            margin-top: 0;
+            color: #34495e;
+        }
+        img {
+            display: block;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+        .participants {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        .participants h4 {
+            margin-bottom: 5px;
+            color: #16a085;
+        }
+        .participant {
+            margin-left: 10px;
+        }
+        /* Стиль для отображения участников */
+        .participants ul {
+            list-style: disc inside;
+        }
+    </style>
 </head>
 <body>
-    <h1>Экзамены по предмету</h1>
-    <p><strong>ФИО:</strong> Галова Елизавета Константиновна</p>
-    <p><strong>Номер группы:</strong> 241-671</p>
+    <div class="profile">
+        <h1>Экзамены по предмету</h1>
+        <p><strong>ФИО:</strong> Галова Елизавета Константиновна</p>
+        <p><strong>Номер группы:</strong> 241-671</p>
+    </div>
 
-    <h2>Опубликованные экзамены</h2>
-    {% if exams %}
-        <ul>
-            {% for exam in exams %}
-                <li>
-                    <h3>{{ exam.name }}</h3>
-                    <p><strong>Дата создания:</strong> {{ exam.created_at }}</p>
-                    <p><strong>Дата проведения экзамена:</strong> {{ exam.exam_date }}</p>
-                    <p>
-                        <strong>Изображение задания:</strong>
-                        {% if exam.image %}
-                            <br><img src="{{ exam.image.url }}" alt="Изображение" width="300" />
-                        {% else %}
-                            Нет изображения
-                        {% endif %}
-                    </p>
-                    <p><strong>Опубликовано:</strong> {{ exam.is_public }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Нет опубликованных экзаменов.</p>
-    {% endif %}
+    <div class="exams">
+        <h2>Опубликованные экзамены</h2>
+        {% if exams %}
+            <ul>
+                {% for exam in exams %}
+                    <li>
+                        <h3>{{ exam.name }}</h3>
+                        <p><strong>Дата создания:</strong> {{ exam.created_at }}</p>
+                        <p><strong>Дата проведения экзамена:</strong> {{ exam.exam_date }}</p>
+                        <p>
+                            <strong>Изображение задания:</strong>
+                            {% if exam.image %}
+                                <br><img src="{{ exam.image.url }}" alt="Изображение" width="300" />
+                            {% else %}
+                                Нет изображения
+                            {% endif %}
+                        </p>
+                        <p><strong>Опубликовано:</strong> {{ exam.is_public }}</p>
+                        <!-- Отображение участников -->
+                        <div class="participants">
+                            <h4>Участники:</h4>
+                            {% if exam.participants.all %}
+                                <ul>
+                                    {% for user in exam.participants.all %}
+                                        <li class="participant">{{ user.email }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>Нет участников</p>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Нет опубликованных экзаменов.</p>
+        {% endif %}
+    </div>
 </body>
 </html>
