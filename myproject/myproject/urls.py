@@ -3,7 +3,10 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from myapp import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('myapp.urls')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('exam/', include('myapp.urls')),
+    path('', views.exam, name='home'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
